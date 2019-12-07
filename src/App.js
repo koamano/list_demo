@@ -2,21 +2,19 @@ import React from "react";
 import logo from "./logo.svg";
 import List from "./components/list";
 import "./App.css";
+import { Route, Switch } from "react-router-dom";
 
 function App() {
-  const label = "List Demo";
-  const placeholder = "Enter new list item";
-  const required = true;
-  const disabled = false;
-  const max = 5;
   return (
-    <List
-      listLabel={label}
-      listPlaceholder={placeholder}
-      listRequired={required}
-      listDisabled={disabled}
-      listMax={max}
-    ></List>
+    <div>
+      <Switch>
+        <Route
+          path="/:label?/:placeholder?/:requiredString?/:disabledString?/:max?"
+          component={List}
+        ></Route>
+        <Route path="/" component={List} />
+      </Switch>
+    </div>
   );
 }
 
