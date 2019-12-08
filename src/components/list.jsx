@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import queryString from "query-string";
 
 class List extends Component {
   constructor(props) {
@@ -13,39 +12,39 @@ class List extends Component {
       currentItemContent: "",
       error: "",
       grid: 6,
-      uniqueKey: 0,
-      label: "",
-      placeholder: "",
-      required: false,
-      disabled: false,
-      max: 0
+      uniqueKey: 0
+      //   label: "",
+      //   placeholder: "",
+      //   required: false,
+      //   disabled: false,
+      //   max: 0
     };
   }
 
-  componentDidMount() {
-    const urlInputs = queryString.parse(this.props.location.search);
+  //   componentDidMount() {
+  //     const urlInputs = queryString.parse(this.props.location.search);
 
-    this.setParameters(urlInputs);
-  }
+  //     this.setParameters(urlInputs);
+  //   }
 
-  setParameters = urlInputs => {
-    const label = urlInputs.label ? urlInputs.label : "default label";
-    const placeholder = urlInputs.placeholder
-      ? urlInputs.placeholder
-      : "default placeholder";
-    const max = urlInputs.max ? parseInt(urlInputs.max) : 5;
+  //   setParameters = urlInputs => {
+  //     const label = urlInputs.label ? urlInputs.label : "default label";
+  //     const placeholder = urlInputs.placeholder
+  //       ? urlInputs.placeholder
+  //       : "default placeholder";
+  //     const max = urlInputs.max ? parseInt(urlInputs.max) : 5;
 
-    const requiredString = urlInputs.required
-      ? urlInputs.required.toLowerCase()
-      : "false";
-    const required = requiredString === "true" ? true : false;
-    const disabledString = urlInputs.disabled
-      ? urlInputs.disabled.toLowerCase()
-      : "false";
-    const disabled = disabledString === "true" ? true : false;
+  //     const requiredString = urlInputs.required
+  //       ? urlInputs.required.toLowerCase()
+  //       : "false";
+  //     const required = requiredString === "true" ? true : false;
+  //     const disabledString = urlInputs.disabled
+  //       ? urlInputs.disabled.toLowerCase()
+  //       : "false";
+  //     const disabled = disabledString === "true" ? true : false;
 
-    this.setState({ label, placeholder, required, disabled, max });
-  };
+  //     this.setState({ label, placeholder, required, disabled, max });
+  //   };
 
   handleChange = e => {
     let { value } = e.target;
@@ -54,7 +53,7 @@ class List extends Component {
   };
 
   handleDelete = e => {
-    const { disabled, max } = this.state;
+    const { disabled, max } = this.props;
     if (disabled === true) {
       return;
     }
@@ -68,7 +67,7 @@ class List extends Component {
   };
 
   handleKeyPress = e => {
-    const { disabled, max } = this.state;
+    const { disabled, max } = this.props;
     if (e.key === "Enter") {
       if (disabled === true) {
         return;
@@ -86,6 +85,16 @@ class List extends Component {
       const uniqueKey = this.state.uniqueKey + 1;
       this.setState({ items, currentItemContent: "", uniqueKey });
     }
+  };
+
+  setMaxError = () => {
+    const error = "List has reached max capacity";
+    this.setState({ error });
+  };
+
+  clearMaxError = () => {
+    const error = "";
+    this.setState({ error });
   };
 
   reorder = (list, startIndex, endIndex) => {
@@ -135,17 +144,6 @@ class List extends Component {
   };
 
   renderListData() {
-    // return this.state.items.map((item, index) => (
-    //   <li key={index}>
-    //     {item}
-    //     <i
-    //       id={index}
-    //       className="fa fa-times float-right hover"
-    //       onClick={this.handleDelete}
-    //     ></i>
-    //   </li>
-    // ));
-
     return this.state.items.map((item, index) => (
       <Draggable key={item.id} draggableId={item.id} index={index}>
         {(provided, snapshot) => (
@@ -170,18 +168,9 @@ class List extends Component {
     ));
   }
 
-  setMaxError = () => {
-    const error = "List has reached max capacity";
-    this.setState({ error });
-  };
-
-  clearMaxError = () => {
-    const error = "";
-    this.setState({ error });
-  };
-
   render() {
-    const { label, placeholder, disabled, required, error, items } = this.state;
+    const { label, placeholder, disabled, required } = this.props;
+    const { items, error } = this.state;
     return (
       <React.Fragment>
         <div>

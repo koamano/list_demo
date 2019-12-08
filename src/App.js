@@ -1,18 +1,17 @@
 import React from "react";
-import logo from "./logo.svg";
-import List from "./components/list";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
+import SetOptionsSample from "./components/setOptionsSample";
+import Samples from "./components/samples";
+import NavBar from "./components/navbar";
 
 function App() {
   return (
     <div>
+      <NavBar></NavBar>
       <Switch>
-        <Route
-          path="/:label?/:placeholder?/:requiredString?/:disabledString?/:max?"
-          component={List}
-        ></Route>
-        <Route path="/" component={List} />
+        <Route path="/samples" component={Samples} />
+        <Route path="/" component={SetOptionsSample} />
       </Switch>
     </div>
   );
