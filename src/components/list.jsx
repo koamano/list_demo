@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import queryString from "query-string";
 
 class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [
-        // { id: "item1", content: "item one content" },
-        // { id: "item2", content: "item two content" }
+        { id: "item1", content: "sample item 1" },
+        { id: "item2", content: "sample item 2" }
       ],
       currentItemContent: "",
       error: "",
@@ -22,25 +23,25 @@ class List extends Component {
   }
 
   componentDidMount() {
-    this.setParameters();
+    const urlInputs = queryString.parse(this.props.location.search);
+
+    this.setParameters(urlInputs);
   }
 
-  setParameters = () => {
-    let {
-      label,
-      placeholder,
-      requiredString,
-      disabledString,
-      max
-    } = this.props.match.params;
+  setParameters = urlInputs => {
+    const label = urlInputs.label ? urlInputs.label : "default label";
+    const placeholder = urlInputs.placeholder
+      ? urlInputs.placeholder
+      : "default placeholder";
+    const max = urlInputs.max ? parseInt(urlInputs.max) : 5;
 
-    label = label ? label : "default label";
-    placeholder = placeholder ? placeholder : "default placeholder";
-    max = max ? parseInt(max) : 5;
-
-    requiredString = requiredString ? requiredString.toLowerCase() : "false";
+    const requiredString = urlInputs.required
+      ? urlInputs.required.toLowerCase()
+      : "false";
     const required = requiredString === "true" ? true : false;
-    disabledString = disabledString ? disabledString.toLowerCase() : "false";
+    const disabledString = urlInputs.disabled
+      ? urlInputs.disabled.toLowerCase()
+      : "false";
     const disabled = disabledString === "true" ? true : false;
 
     this.setState({ label, placeholder, required, disabled, max });
