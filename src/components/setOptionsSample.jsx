@@ -7,10 +7,6 @@ class SetOptionsSample extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //   items: [
-      //     { id: "item1", content: "sample item 1" },
-      //     { id: "item2", content: "sample item 2" }
-      //   ],
       currentItemContent: "",
       error: "",
       grid: 6,

@@ -13,38 +13,8 @@ class List extends Component {
       error: "",
       grid: 6,
       uniqueKey: 0
-      //   label: "",
-      //   placeholder: "",
-      //   required: false,
-      //   disabled: false,
-      //   max: 0
     };
   }
-
-  //   componentDidMount() {
-  //     const urlInputs = queryString.parse(this.props.location.search);
-
-  //     this.setParameters(urlInputs);
-  //   }
-
-  //   setParameters = urlInputs => {
-  //     const label = urlInputs.label ? urlInputs.label : "default label";
-  //     const placeholder = urlInputs.placeholder
-  //       ? urlInputs.placeholder
-  //       : "default placeholder";
-  //     const max = urlInputs.max ? parseInt(urlInputs.max) : 5;
-
-  //     const requiredString = urlInputs.required
-  //       ? urlInputs.required.toLowerCase()
-  //       : "false";
-  //     const required = requiredString === "true" ? true : false;
-  //     const disabledString = urlInputs.disabled
-  //       ? urlInputs.disabled.toLowerCase()
-  //       : "false";
-  //     const disabled = disabledString === "true" ? true : false;
-
-  //     this.setState({ label, placeholder, required, disabled, max });
-  //   };
 
   handleChange = e => {
     let { value } = e.target;
@@ -106,28 +76,21 @@ class List extends Component {
   };
 
   getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
     userSelect: "none",
     padding: this.state.grid,
     margin: `0 0 ${this.state.grid}px 0`,
 
-    // change background colour if dragging
-    //background: isDragging ? "white" : "white",
     background: "lightgrey",
 
-    // styles we need to apply on draggables
     ...draggableStyle
   });
 
   getListStyle = isDraggingOver => ({
-    //background: isDraggingOver ? "lightblue" : "lightgrey",
     background: "white",
     padding: this.state.grid
-    //width: 500
   });
 
   onDragEnd = result => {
-    // dropped outside the list
     if (!result.destination) {
       return;
     }
